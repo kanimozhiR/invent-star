@@ -1,0 +1,39 @@
+<script>
+	$(document).ready(function(){
+		$('#add').on(function(){
+			  var product_id = $(this).prev().prev().prev().val();
+			   $.ajax({
+        type: "GET",
+        url: "/stock/"+product_id.toString()+"/line_item", 
+        data: JSON.stringify({product_id: "1"}), 
+        dataType: "json",
+        contentType: "application/json",
+        success: function(data){
+        console.log(data["products"]);
+        $('#more_products').append(data['products']);
+         }
+         });
+		});
+	});
+</script>
+
+<h1>Stock#new</h1>
+<p>Find me in app/views/stock/new.html.erb</p>
+
+ <%= form_tag '/stock/create', method: :get do %>
+ <div id = "stock">
+ 	<div class = "product_entry">
+ <%= select_tag 'product', options_from_collection_for_select(@products, 'id','name') %>
+ <%= text_field_tag :date %>
+ <%= text_field_tag :quantity %>
+
+ <a href = ""  id = "add">Add item</a>
+ <div id = "more_products"><p>Hello</p></div>
+
+ 	<%= submit_tag :submit %>
+
+</div>
+ </div>
+
+<%end%>
+
